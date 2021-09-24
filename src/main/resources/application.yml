@@ -1,0 +1,11 @@
+spring:
+  datasource:
+  # Di default fa partire i file schema.sql e data.sql
+  # Altrimenti se ne può specificare uno con un diverso nome
+    url: jdbc:h2:mem:nomeDb;INIT=RUNSCRIPT FROM 'classpath:create.sql';
+    username: sa
+    password:
+  h2:
+    console:
+      enabled: true
+      path: /h2

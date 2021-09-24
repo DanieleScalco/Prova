@@ -13,6 +13,7 @@ import java.util.stream.Stream;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
 
 import com.example.demo.prova.GenericContainer;
 import com.example.demo.prova.NumberWithName;
@@ -23,10 +24,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @SpringBootApplication
 public class ProvaApplication {
 
+	private static ApplicationContext applicationContext;
+	
 	public static void main(String[] args) {
-		SpringApplication.run(ProvaApplication.class, args);
+		applicationContext = SpringApplication.run(ProvaApplication.class, args);
 		
 		//System.out.println("\n\n\n>>>Template test");
+		
+		//displayAllBeans();
 		
 		prestazioniCreatoriStringheTest();
 		
@@ -47,6 +52,14 @@ public class ProvaApplication {
 		streamTest();
 
 	}
+	
+	// Mostra tutti i bean
+	public static void displayAllBeans() {
+        String[] allBeanNames = applicationContext.getBeanDefinitionNames();
+        for(String beanName : allBeanNames) {
+            System.out.println(beanName);
+        }
+    }
 
 	private static void patternMatcherTest() {
 		System.out.println("\n\n\n>>>Trovare il pattern in una stringa");
@@ -75,7 +88,7 @@ public class ProvaApplication {
 
 	    long start = System.currentTimeMillis();
 	    
-	    for (int i = 0; i < 1000000; i++) {
+	    for (int i = 0; i < 100000; i++) {
 	        String s = String.format(formatString, i, +i * 2);
 	    }
 
@@ -85,7 +98,7 @@ public class ProvaApplication {
 	    // concatenazione
 	    start = System.currentTimeMillis();
 
-	    for (int i = 0; i < 1000000; i++) {
+	    for (int i = 0; i < 100000; i++) {
 	        String s ="";
 	        s += "Hi " + i + "; Hi to you " + i * 2;
 	    }
@@ -97,7 +110,7 @@ public class ProvaApplication {
 	    // StringBuilder
 	    start = System.currentTimeMillis();
 
-	    for (int i = 0; i < 1000000; i++) {
+	    for (int i = 0; i < 100000; i++) {
 	        StringBuilder bldString = new StringBuilder("Hi ");
 	        bldString.append(i).append("Hi to you ").append(i * 2).toString();
 	    }

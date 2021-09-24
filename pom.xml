@@ -31,8 +31,27 @@
 		<dependency>  
 		     <groupId>com.fasterxml.jackson.core</groupId>  
 		     <artifactId>jackson-databind</artifactId>  
-		     <version>2.12.1</version>  
-		</dependency>  
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		
+		<!-- H2 necessita anche della dipendenza spring-boot-starter-data-jpa -->
+		<!-- H2 Carica direttamente gli script in schema.sql e in data.sql (creazione e popolamento) -->
+		<!-- H2 Carica crea le tabelle di tutti gli oggetti definiti come entity -->
+		<dependency>
+		    <groupId>com.h2database</groupId>
+		    <artifactId>h2</artifactId>
+		    <scope>runtime</scope>
+		</dependency>
+		  
 	</dependencies>
 
 	<build>
