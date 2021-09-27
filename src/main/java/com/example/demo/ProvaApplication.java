@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.regex.Matcher;
@@ -11,9 +12,14 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMessageHelper;
 
 import com.example.demo.prova.GenericContainer;
 import com.example.demo.prova.NumberWithName;
@@ -24,12 +30,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @SpringBootApplication
 public class ProvaApplication {
 
+	// Necessario per avere l'elenco dei Bean
 	private static ApplicationContext applicationContext;
-	
+		
 	public static void main(String[] args) {
 		applicationContext = SpringApplication.run(ProvaApplication.class, args);
 		
 		//System.out.println("\n\n\n>>>Template test");
+		
+		invioMailTest();
 		
 		//displayAllBeans();
 		
@@ -51,6 +60,40 @@ public class ProvaApplication {
 		
 		streamTest();
 
+	}
+
+	private static void invioMailTest() {
+		System.out.println("\n\n\n>>>Test invio mail");
+		
+		String mail = "danielescalco@hotmail.it";
+		String password = "Bastoner94";
+		String subject = "Oggetto di prova";
+		String text = "Prima Spring Boot mail";
+		String host = "smtp-mail.outlook.com";
+		int port = 587;
+		
+		JavaMailSenderImpl javaMailSenderImpl = new JavaMailSenderImpl();
+		javaMailSenderImpl.setHost(host);
+		javaMailSenderImpl.setPort(port);
+		javaMailSenderImpl.setUsername(mail);
+		javaMailSenderImpl.setPassword(password);
+		
+		Properties props = new Properties();
+		props.put("mail.smtp.starttls.enable", "true");
+		javaMailSenderImpl.setJavaMailProperties(props);
+		
+		MimeMessage mimeMessage = javaMailSenderImpl.createMimeMessage();
+		MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage);
+		try {
+			mimeMessageHelper.setFrom(mail);
+			mimeMessageHelper.setText(text);
+			mimeMessageHelper.setTo(mail);
+			mimeMessageHelper.setSubject(subject);
+			javaMailSenderImpl.send(mimeMessage);
+		} catch (MessagingException e1) {
+			e1.printStackTrace();
+		}
+	    
 	}
 	
 	// Mostra tutti i bean
