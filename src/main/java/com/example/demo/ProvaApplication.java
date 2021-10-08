@@ -1,6 +1,7 @@
 package com.example.demo;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,7 +30,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @SpringBootApplication
 public class ProvaApplication {
-
+	
 	// Necessario per avere l'elenco dei Bean
 	private static ApplicationContext applicationContext;
 		
@@ -37,8 +38,10 @@ public class ProvaApplication {
 		applicationContext = SpringApplication.run(ProvaApplication.class, args);
 		
 		//System.out.println("\n\n\n>>>Template test");
-		
-		invioMailTest();
+
+		//fizzBuzz();
+
+		//invioMailTest();
 		
 		//displayAllBeans();
 		
@@ -59,14 +62,39 @@ public class ProvaApplication {
 		genericsTest();
 		
 		streamTest();
+		
 
+	}
+
+	private static <T> void stampaLista(Collection<T> list, boolean singleLine) {
+		if (singleLine)
+			for (T t: list)
+				System.out.print(t + " ");
+		else 
+			for (T t: list)
+				System.out.println(t);
+	}
+
+	private static void fizzBuzz() {
+		//System.out.println("\n\n\n>>>FizzBuzz");
+		for (int i = 1; i <= 100; i++) {
+			if (i % 3 == 0 && i % 5 == 0)
+				System.out.println("FizzBuzz");
+			else if (i % 3 == 0)
+				System.out.println("Fizz");
+			else if (i % 5 == 0)
+				System.out.println("Buzz");
+			else
+				System.out.println(i);
+			
+		}
 	}
 
 	private static void invioMailTest() {
 		System.out.println("\n\n\n>>>Test invio mail");
 		
 		String mail = "danielescalco@hotmail.it";
-		String password = "Bastoner94";
+		String password = null;
 		String subject = "Oggetto di prova";
 		String text = "Prima Spring Boot mail";
 		String host = "smtp-mail.outlook.com";
@@ -171,8 +199,8 @@ public class ProvaApplication {
 		list.add("paperino");
 		list.add("topolino");
 		System.out.print("Lista: ");
-		for (String s: list)
-			System.out.print(s + " ");
+		stampaLista(list, true);
+
 		
 		List<String> listaManipolata = list.stream()
 										   .filter(s -> s.charAt(0) == 'p')
@@ -180,8 +208,7 @@ public class ProvaApplication {
 										   .collect(Collectors.toList());
 		
 		System.out.print("\nLista manipolata: ");
-		for (String s: listaManipolata)
-			System.out.print(s + " ");
+		stampaLista(listaManipolata, true);
 		
 		
 		///////////
@@ -194,8 +221,8 @@ public class ProvaApplication {
 		numbers.add(new NumberWithName(2, "Due"));
 		
 		System.out.print("Lista numbers: ");
-		for (NumberWithName s: numbers)
-			System.out.print("[" + s.getN() + ", " + s.getName() + "]" + " ");
+		stampaLista(numbers, true);
+
 		
 		List<NumberWithName> numbersManipulated = numbers.stream()
 														 .sorted((a, b) -> a.getN().compareTo(b.getN()))
@@ -208,8 +235,7 @@ public class ProvaApplication {
 		System.out.println("Number min: " + numbersMin.getN());
 		
 		System.out.print("\nListanumbers manipolata: ");
-		for (NumberWithName s: numbersManipulated)
-			System.out.print("[" + s.getN() + ", " + s.getName() + "]" + " ");
+		stampaLista(numbersManipulated, true);
 		
 		
 		

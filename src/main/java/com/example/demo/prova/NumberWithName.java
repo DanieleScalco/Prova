@@ -29,7 +29,7 @@ public class NumberWithName {
 	
 	@Override
 	public String toString() {
-		return "NumberWithName [n=" + n + ", name=" + name + "]";
+		return "NumberWithName [" + n + ", " + name + "]";
 	}
 	
 	
