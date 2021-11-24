@@ -38,7 +38,7 @@ public class ProvaApplication {
 		
 		//System.out.println("\n\n\n>>>Template test");
 		
-		invioMailTest();
+		//invioMailTest();
 		
 		//displayAllBeans();
 		
